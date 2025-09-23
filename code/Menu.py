@@ -14,6 +14,7 @@ class Menu:
         self.rect = self.surf.get_rect(left=0, top=0)
 
     def Run(self, ):
+        menu_option = 0
         pygame.mixer.music.load('./asset/Menu.mp3')
         pygame.mixer.music.play(-1)
 
@@ -24,7 +25,10 @@ class Menu:
             self.menu_text(70, 'Shooter', Const.COLOR_ORANGE, ((Const.WIN_WIDTH / 2), 90))
 
             for i in range(len(Const.MENU_OPTION)):
-                self.menu_text(40, Const.MENU_OPTION[i], Const.COLOR_WHITE, ((Const.WIN_WIDTH / 2), 160 + 30 * i))
+                if i == menu_option:
+                    self.menu_text(40, Const.MENU_OPTION[i], Const.COLOR_YELLOW, ((Const.WIN_WIDTH / 2), 160 + 30 * i))
+                else:
+                    self.menu_text(40, Const.MENU_OPTION[i], Const.COLOR_WHITE, ((Const.WIN_WIDTH / 2), 160 + 30 * i))
 
             pygame.display.flip()
 
@@ -33,6 +37,18 @@ class Menu:
                 if event.type == pygame.QUIT:
                     pygame.quit()  # Close window
                     quit()  # end pygame
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:
+                        menu_option += 1
+                        if menu_option >= len(Const.MENU_OPTION):
+                            menu_option = 0
+                    if event.key == pygame.K_UP:
+                        menu_option -= 1
+                        if menu_option < 0:
+                            menu_option = len(Const.MENU_OPTION)-1
+                    if event.key == pygame.K_RETURN:
+                        return Const.MENU_OPTION[menu_option]
 
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
         text_font: Font = pygame.font.SysFont('Lucida Sans Typewriter', size=text_size)
