@@ -27,3 +27,5 @@ class EntityFactory:
             case 'Enemy2':
                 return Enemy('Enemy2', ((WIN_WIDTH + 10), randint(40, WIN_HEIGHT - 40)))
         return None
+
+
